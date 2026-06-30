@@ -1,3 +1,4 @@
 import streamlit as st
+from pages import replace
 
-st.title("Testcase Gen")
+replace.main()
