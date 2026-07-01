@@ -84,20 +84,15 @@ single_slot = st.number_input(
     max_value=slot_max,
     value=0
 )
-# =========================================================
-# Generate
-# =========================================================
-if st.button("Generate"):
+# =====================================================
+# Auto Generate
+# =====================================================
 
-    if not input_text.strip():
-        st.warning("Please paste input text first")
-        st.stop()
+if input_text.strip():
 
     output_all = ""
 
-    # =====================================================
     # All Slots
-    # =====================================================
     if view_mode == "All Slots":
 
         for slot in range(slot_max + 1):
@@ -107,21 +102,14 @@ if st.button("Generate"):
             for src, dst in rules:
 
                 if src.strip():
-
                     new_txt = new_txt.replace(
                         src,
                         dst.format(slot=slot)
                     )
 
-            # output_all += (
-                # f"\n// ================= SLOT {slot} =================\n"
-            # )
-
             output_all += new_txt + "\n"
 
-    # =====================================================
     # Single Slot
-    # =====================================================
     else:
 
         slot = single_slot
@@ -131,7 +119,6 @@ if st.button("Generate"):
         for src, dst in rules:
 
             if src.strip():
-
                 new_txt = new_txt.replace(
                     src,
                     dst.format(slot=slot)
@@ -139,20 +126,12 @@ if st.button("Generate"):
 
         output_all = new_txt
 
-    # =====================================================
-    # Output
-    # =====================================================
-    st.success("Done")
-
     st.subheader("Result")
-
-    # st.text_area(
-    #     "Copy Output",
-    #     output_all,
-    #     height=500
-    # )
 
     st.code(
         output_all,
         language="verilog"
     )
+
+else:
+    st.info("Paste Verilog / Text here")
