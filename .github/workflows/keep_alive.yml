@@ -2,7 +2,7 @@ name: Keep Streamlit App Alive
 
 on:
   schedule:
-    - cron: '0 */1 * * *'
+  - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,4 +11,6 @@ jobs:
     steps:
       - name: Send HTTP Request to Streamlit App
         run: |
-          curl -I https://testcasegen.streamlit.app/
+          curl --retry 5 --retry-delay 10 \
+         --fail \
+         https://testcasegen.streamlit.app/
